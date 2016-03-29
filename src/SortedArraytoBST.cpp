@@ -33,9 +33,53 @@ struct node{
 	struct node *right;
 };
 
+struct node* GetNewNode(int data) {
+
+	struct node * newNode = (struct node *)malloc(sizeof(struct node));
+	newNode->data = data;
+	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+struct node* Insert(struct node *root, int data) {
+	if (root == NULL) 
+		root = GetNewNode(data);
+	
+	else if (data <= root->data)
+		root->left = Insert(root->left, data);
+	
+	else 
+		root->right = Insert(root->right, data);
+	
+	return root;
+}
+
+struct node *my_new_func(struct node *root, int *arr, int start, int end)
+{
+	int mid;
+	if (start == end)
+	{
+		//printf("\narr[%d] = %d", start, arr[start]);
+		root = Insert(root, arr[start]);
+	}
+	if (start < end)
+	{
+		mid = (start + end) / 2;
+		//printf("\narr[%d] = %d", mid, arr[mid]);
+		
+		root = Insert(root, arr[mid]);
+		root = my_new_func(root, arr, start, mid - 1);
+		root = my_new_func(root, arr, mid + 1, end);
+	}
+	return root;
+
+}
 
 struct node * convert_array_to_bst(int *arr, int len){
+	if (arr == NULL || len <= 0)
+		return NULL;
+	struct node *root = NULL;
+	return my_new_func(root, arr, 0, len - 1);
 	
-	return NULL;
 }
 
