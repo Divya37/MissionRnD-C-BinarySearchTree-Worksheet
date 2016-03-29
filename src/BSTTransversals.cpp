@@ -16,6 +16,8 @@ it and understand how testing works .
 
 #include <stdio.h>
 
+int i = 0;
+
 struct node{
 	struct node * left;
 	int data;
@@ -23,13 +25,60 @@ struct node{
 };
 
 
+void inorder_traversal(struct node *root, int *arr, int *index)
+{
+	if (root == NULL)
+		return;
+	inorder_traversal(root->left, arr, index);
+	arr[*index] = root->data;
+	*index = *index + 1;
+	inorder_traversal(root->right, arr, index);
+}
+
 void inorder(struct node *root, int *arr){
-	
+	int i = 0;
+	if (arr == NULL)
+		return;
+	inorder_traversal(root, arr, &i);
 }
-void preorder(struct node *root, int *arr){
-	
+
+void preorder_traversal(struct node *root, int *arr, int *index){
+
+	if (root == NULL)
+		return;
+
+	arr[*index] = root->data;
+	*index = *index + 1;
+
+	preorder_traversal(root->left, arr, index);
+	preorder_traversal(root->right, arr, index);
 }
-void postorder(struct node *root, int *arr){
-	
+
+void preorder(struct node *root, int *arr)
+{
+	int i = 0;
+	if (arr == NULL)
+		return;
+	preorder_traversal(root, arr, &i);
+}
+
+void postorder_traversal(struct node *root, int *arr, int *index){
+
+	if (root == NULL)
+		return;
+	postorder_traversal(root->left, arr, index);
+	postorder_traversal(root->right, arr, index);
+
+	arr[*index] = root->data;
+	*index = *index + 1;
+
+}
+
+void postorder(struct node *root, int *arr)
+{
+	int i = 0;
+	if (arr == NULL)
+		return;
+	postorder_traversal(root, arr, &i);
 }
 
