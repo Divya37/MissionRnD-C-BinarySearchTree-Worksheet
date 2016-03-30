@@ -109,7 +109,7 @@ namespace spec
 
 
 			int *arr = BSTRighttoLeftRows(root);
-			int ans[5] = { 10, 12, 5};
+			int ans[3] = { 10, 12, 5};
 			int len = 3;
 			for (int i = 0; i < len; i++){
 				Assert::AreEqual(ans[i], arr[i], L"Rows Fail Three element", 1, 2);
