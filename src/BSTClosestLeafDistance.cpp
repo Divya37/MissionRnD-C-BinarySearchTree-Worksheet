@@ -38,8 +38,40 @@ struct node{
   int data;
   struct node *right;
 };
+int min(int a, int b)
+{
+	return (a < b) ? a : b;
+}
+int min_height(struct node *root)
+{
+	if (root == NULL)
+		return 9999;
+	if (root->left == NULL && root->right == NULL)
+		return 0;
+	return min(min_height(root->left), min_height(root->right)) + 1;
+}
+
+int min_dist(struct node *root, struct node *temp, struct node *prev_roots[], int index)
+{
+	if (root == NULL)
+		return 9999;
+	if (root == temp)
+	{
+		int d = min_height(root);
+		for (int i = index - 1; i >= 0; i--)
+			d = min(d, (index - i) + min_height(prev_roots[i]));
+		return d;
+	}
+	prev_roots[index] = root;
+	index = index + 1;
+	return min(min_dist(root->left, temp, prev_roots, index), min_dist(root->right, temp, prev_roots, index));
+}
 
 int get_closest_leaf_distance(struct node *root, struct node *temp)
 {
-  return -1;
+	if (root == NULL || temp==NULL)
+		return -1;
+
+	struct node *prev_roots[10];
+	return min_dist(root, temp, prev_roots, 0);
 }
